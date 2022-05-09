@@ -1,0 +1,369 @@
+// searches for a specified row in an array row by row, and then returns the row's relative position
+A.XMATCH.ROWS = LAMBDA(lookup_rows, lookup_array, [search_mode],
+    IFS(
+        AND(NOT(ISOMITTED(search_mode)), search_mode * 1 <> 1, search_mode * 1 <> -1),
+        #VALUE!,
+        TRUE,
+        LET(
+            XMATCH_ROW,
+            LAMBDA(lookup_row, lookup_array, [search_mode],
+                IFS(
+                    AND(ROWS(lookup_row) = 1, OR(ISOMITTED(search_mode), search_mode * 1 = 1, search_mode * 1 = -1)),
+                    XMATCH(TRUE, BYROW(lookup_array, LAMBDA(row, ARRAYTOTEXT(lookup_row, 1) = ARRAYTOTEXT(row,1))), 0, search_mode),
+                    TRUE,
+                    #VALUE!)
+            ),
+            BYROW(
+                lookup_rows, 
+                LAMBDA(row, XMATCH_ROW(row, lookup_array, search_mode)))))
+);
+
+// searches for a specified column in an array column by column, and then returns the column's relative position
+A.XMATCH.COLS = LAMBDA(lookup_cols, lookup_array, [search_mode],
+    IFS(
+        AND(NOT(ISOMITTED(search_mode)), search_mode * 1 <> 1, search_mode * 1 <> -1),
+        #VALUE!,
+        TRUE,
+        LET(
+            XMATCH_COL,
+            LAMBDA(lookup_col, lookup_array, [search_mode],
+                IFS(
+                    AND(COLUMNS(lookup_col) = 1, OR(ISOMITTED(search_mode), search_mode * 1 = 1, search_mode * 1 = -1)),
+                    XMATCH(TRUE, BYCOL(lookup_array, LAMBDA(col, ARRAYTOTEXT(lookup_col, 1) = ARRAYTOTEXT(col,1))), 0, search_mode),
+                    TRUE,
+                    #VALUE!)
+            ),
+            BYCOL(
+                lookup_cols, 
+                LAMBDA(col, XMATCH_COL(col, lookup_array, search_mode)))))
+);
+
+// scans an array row by row by applying a LAMBDA function to each row, and returns an array that has each intermediate value
+A.SCAN.ROWS = LAMBDA(initial_value, array, function_row,
+    SCAN(initial_value, SEQUENCE(ROWS(array)),
+        LAMBDA(acc, i_row, function_row(acc, CHOOSEROWS(array, i_row))))
+);
+
+// scan an array column by column by applying a LAMBDA function to each column, and returns an array that has each intermediate value
+A.SCAN.COLS = LAMBDA(initial_value, array, function_col,
+    TRANSPOSE(
+        SCAN(initial_value, SEQUENCE(COLUMNS(array)),
+            LAMBDA(acc, i_col, function_col(acc, CHOOSECOLS(array, i_col)))))
+);
+
+// reduces an array to an accumulated value by applying a LAMBDA function to each row and returning the total value in the accumulator
+A.REDUCE.ROWS = LAMBDA(initial_value, array, function,
+    IFS(
+        OR(ISOMITTED(initial_value), ISOMITTED(array), ISOMITTED(function)),
+        #VALUE!,
+        TRUE,
+        REDUCE(initial_value, SEQUENCE(ROWS(array)),
+            LAMBDA(acc, i, function(acc, CHOOSEROWS(array, i))))
+    )
+);
+
+// reduces an array to an accumulated value by applying a LAMBDA function to each column and returning the total value in the accumulator
+A.REDUCE.COLS = LAMBDA(initial_value, array, function,
+    IFS(
+        OR(ISOMITTED(initial_value), ISOMITTED(array), ISOMITTED(function)),
+        #VALUE!,
+        TRUE,
+        REDUCE(initial_value, SEQUENCE(COLUMNS(array)),
+            LAMBDA(acc, i, function(acc, CHOOSECOLS(array, i))))
+    )
+);
+
+// counts the number of cells within a range that meet the given condition
+// counts the number of rows within an array that is same as a given row 
+A.COUNTIF.ROWSEQUAL = LAMBDA(array, criteria,
+    BYROW(
+        array,
+        LAMBDA(
+            row,
+            A.REDUCE.ROWS(0, criteria, LAMBDA(acc, row_bis,
+                IF(ARRAYTOTEXT(row, 1) = ARRAYTOTEXT(row_bis, 1), acc + 1, acc)
+            ))
+        )
+    )    
+);
+
+// counts the number of columns within a range that is same as a given column
+A.COUNTIF.COLSEQUAL = LAMBDA(array, criteria,
+    BYCOL(
+        array,
+        LAMBDA(
+            col,
+            A.REDUCE.COLS(0, criteria, LAMBDA(acc, col_bis,
+                IF(ARRAYTOTEXT(col, 1) = ARRAYTOTEXT(col_bis, 1), acc + 1, acc)
+            ))
+        )
+    )    
+);
+
+A.UNION.CELLS = LAMBDA(array1, array2, [ignore], [scan_by_column],
+    UNIQUE(VSTACK(
+        TOCOL(array1, ignore, scan_by_column), 
+        TOCOL(array2, ignore, scan_by_column)))
+);
+
+A.UNION.ROWS = LAMBDA(array1, array2,
+    UNIQUE(VSTACK(array1, array2), FALSE)
+);
+
+A.UNION.COLS = LAMBDA(array1, array2,
+    UNIQUE(HSTACK(array1, array2), TRUE)
+);
+
+A.INTERSECT.CELLS = LAMBDA(array1, array2, [ignore], [scan_by_column],
+    LET(
+        array1du_1, UNIQUE(TOCOL(array1, ignore, scan_by_column)),
+        array1du_2, UNIQUE(TOCOL(array2, ignore, scan_by_column)),
+        FILTER(array1du_1, NOT(ISERROR(XMATCH(array1du_1, array1du_2)))))
+);
+
+A.INTERSECT.ROWS = LAMBDA(array1, array2,
+    LET(
+        arrayu_1, UNIQUE(array1, FALSE),
+        arrayu_2, UNIQUE(array2, FALSE),
+        FILTER(arrayu_1, NOT(ISERROR(A.XMATCH.ROWS(arrayu_1, arrayu_2))))
+    )
+);
+
+A.SETDIFF.CELLS = LAMBDA(array1, array2, [ignore], [scan_by_column],
+    LET(
+        array1du_1, UNIQUE(TOCOL(array1, ignore, scan_by_column)),
+        array1du_2, UNIQUE(TOCOL(array2, ignore, scan_by_column)),
+        FILTER(array1du_1, ISERROR(XMATCH(array1du_1, array1du_2))))
+);
+
+A.SETDIFF.ROWS = LAMBDA(array1, array2, 
+    LET(
+        arrayu_1, UNIQUE(array1, FALSE),
+        arrayu_2, UNIQUE(array2, FALSE),
+        FILTER(arrayu_1, ISERROR(A.XMATCH.ROWS(arrayu_1, arrayu_2)))
+    )
+);
+
+A.DUPLICATED.OCCURRENCE = LAMBDA(array, occurrence, [by_col], 
+    LET(
+        by_col, IF(ISOMITTED(by_col), 0, by_col * 1),
+        IFS(
+            by_col = 0, 
+            A.COUNTIF.ROWSEQUAL(array, array) = occurrence,
+            by_col = 1, 
+            A.COUNTIF.COLSEQUAL(array, array) = occurrence,
+            TRUE,
+            #VALUE!))
+);
+
+A.DUPLICATED = LAMBDA(array, [keep], [by_col],
+    LET(
+        keep, IF(ISOMITTED(keep), 0, keep * 1),
+        by_col, IF(ISOMITTED(by_col), 0, by_col * 1),
+        IFS(
+            by_col = 0, 
+            IFS(
+                keep = 0, // FALSE
+                A.COUNTIF.ROWSEQUAL(array, array) >= 2,
+                keep = 1,
+                ROW(array) - MIN(ROW(array)) + 1 <> A.XMATCH.ROWS(array,array), // "first"
+                keep = -1,
+                ROW(array) - MIN(ROW(array)) + 1 <> A.XMATCH.ROWS(array, array, -1), // "last"
+                TRUE,
+                #VALUE!),
+            by_col = 1, 
+            IFS(
+                keep = 0, // FALSE
+                A.COUNTIF.COLSEQUAL(array, array) >= 2,
+                keep = 1,
+                COLUMN(array) - MIN(COLUMN(array)) + 1 <> A.XMATCH.COLS(array,array), // "first"
+                keep = -1,
+                COLUMN(array) - MIN(COLUMN(array)) + 1 <> A.XMATCH.COLS(array, array, -1), // "last"
+                TRUE,
+                #VALUE!),                
+            TRUE,
+            #VALUE!))
+);
+
+A.DUPLICATES = LAMBDA(array, [keep], [by_col], [return_array], // keep should be FALSE by default
+    LET(
+        return_array, IF(ISOMITTED(return_array), array, return_array),
+        FILTER(return_array, A.DUPLICATED(array, keep, by_col)))
+);
+
+A.DUPLICATES.OCCURRENCE = LAMBDA(array, occurrence, [by_col], [return_array],
+    LET(
+        return_array, IF(ISOMITTED(return_array), array, return_array),
+        FILTER(return_array, A.DUPLICATED.OCCURRENCE(array, occurrence, by_col)))
+);
+
+A.LOCATE.CELLBYTEXT = LAMBDA(find_text, within_array, [search_mode],
+    LET(
+        ROTATEROWS,
+        LAMBDA(array,
+            LET(
+                rows, ROWS(array),
+                MAKEARRAY(ROWS(array), COLUMNS(array), 
+                    LAMBDA(i, j, INDEX(array, rows - i + 1, j)))
+            )
+        ),
+        ROTATECOLS,
+        LAMBDA(array,
+            LET(
+                columns, COLUMNS(array),
+                MAKEARRAY(ROWS(array), COLUMNS(array), 
+                    LAMBDA(i, j, INDEX(array, i, columns - j + 1)))
+            )
+        ),
+        IFS(
+            AND(NOT(ISOMITTED(search_mode)), search_mode * 1 <> 1, search_mode * 1 <> 2, search_mode * 1 <> 3, search_mode * 1 <> 4),
+            #VALUE!,
+            TRUE,
+            LET(
+                matches, ISNUMBER(SEARCH(find_text, within_array)),
+                IFS(
+                    OR(ISOMITTED(search_mode), search_mode * 1 = 1), // topdown, leftright
+                    LET(
+                        x, XMATCH(TRUE, TOCOL(matches)),
+                        row_rel, INT((x - 1) / COLUMNS(within_array)) + 1,
+                        col_rel, LET(r, MOD(x, COLUMNS(within_array)), IF(r = 0, COLUMNS(within_array), r)),
+                        INDEX(within_array, row_rel, col_rel)        
+                    ),
+                    AND(NOT(ISOMITTED(search_mode)), search_mode * 1 = 2), // topdown, rightleft
+                    LET(
+                        x, XMATCH(TRUE, TOCOL(ROTATECOLS(matches))),
+                        row_rel, INT((x - 1) / COLUMNS(within_array)) + 1,
+                        col_rel, COLUMNS(within_array) - LET(r, MOD(x, COLUMNS(within_array)), IF(r = 0, COLUMNS(within_array), r)) + 1,
+                        INDEX(within_array, row_rel, col_rel)             
+                    ),
+                    AND(NOT(ISOMITTED(search_mode)), search_mode * 1 = 3), // downtop, leftright
+                    LET(
+                        x, XMATCH(TRUE, TOCOL(ROTATEROWS(matches))),
+                        row_rel, ROWS(within_array) - INT((x - 1) / COLUMNS(within_array)),
+                        col_rel, LET(r, MOD(x, COLUMNS(within_array)), IF(r = 0, COLUMNS(within_array), r)),
+                        INDEX(within_array, row_rel, col_rel)
+                    ),
+                    AND(NOT(ISOMITTED(search_mode)), search_mode * 1 = 4), // downtop, rightleft
+                    LET(
+                        x, XMATCH(TRUE, TOCOL(matches), , -1),
+                        row_rel, ROWS(within_array) - INT((x - 1) / COLUMNS(within_array)),
+                        col_rel, LET(r, MOD(x, COLUMNS(within_array)), IF(r = 0, COLUMNS(within_array), r)),
+                        INDEX(within_array, row_rel, col_rel)  
+                    ),
+                    TRUE, "Not Possible"))))
+);
+
+A.JUMP = LAMBDA(reference, [direction], [special_cell], [scope],
+    LET(
+        CHOOSERANGE,
+        LAMBDA(row_min, col_min, row_max, col_max,
+            INDIRECT(ADDRESS(row_min, col_min)):INDIRECT(ADDRESS(row_max, col_max))
+        ),
+        CHANGEROW, 
+        LAMBDA(reference, row_new,
+            LET(
+                row_min, MIN(ROW(reference)),
+                row_max, MAX(ROW(reference)),
+                col_min, MIN(COLUMN(reference)),
+                col_max, MAX(COLUMN(reference)),
+                CHOOSERANGE(row_new, col_min, row_new, col_max))
+        ),
+        CHANGECOL,
+        LAMBDA(reference, col_new,
+            LET(
+                row_min, MIN(ROW(reference)),
+                row_max, MAX(ROW(reference)),
+                col_min, MIN(COLUMN(reference)),
+                col_max, MAX(COLUMN(reference)),
+                CHOOSERANGE(row_min, col_new, row_max, col_new))
+        ),              
+        scope, IF(ISOMITTED(scope), CHOOSERANGE(1, 1, 1048576, 16384), scope),
+        f, 
+        IFS(
+            OR(ISOMITTED(special_cell), special_cell * 1 = 1),
+            LAMBDA(scope, NOT(ISBLANK(scope))), // last_non-blank_inside_scope
+            special_cell = 2,
+            LAMBDA(scope, 1), // last_cell_inside_scope
+            TRUE,
+            #VALUE!
+        ),
+        IFS(
+            OR(ISOMITTED(direction), direction * 1 = 1), // down
+            LET(
+                scope_inter, CHOOSERANGE(min(row(scope)), min(column(reference)), max(row(scope)), max(column(reference))),
+                LET(
+                    row_new,
+                    MAX(row(scope_inter) * f(scope_inter)),
+                    IF(
+                        row_new > MAX(ROW(reference)),
+                        CHANGEROW(reference, row_new),
+                        reference // when there is no other cells on the right, what to return??? return #CALC!???
+                    ))),            
+            direction * 1 = 2, // left 
+            LET(
+                scope_inter, CHOOSERANGE(min(row(reference)), min(column(scope)), max(row(reference)), max(column(scope))),
+                LET(
+                    col_new,
+                    LET(x, column(scope_inter) * f(scope_inter), IFERROR(MIN(FILTER(x, x <> 0)), 16385)),
+                    IF(
+                        col_new < MIN(COLUMN(reference)),
+                        CHANGECOL(reference, col_new),
+                        reference // when there is no other cells on the right, what to return???
+                    ))),
+            direction * 1 = 3, // right
+            LET(
+                scope_inter, CHOOSERANGE(min(row(reference)), min(column(scope)), max(row(reference)), max(column(scope))),
+                LET(
+                    col_new,
+                    MAX(column(scope_inter) * f(scope_inter)),
+                    IF(
+                        col_new > MAX(COLUMN(reference)),
+                        CHANGECOL(reference, col_new),
+                        reference // when there is no other cells on the right, what to return???
+                    ))),
+            direction * 1 = 4, // up
+            LET(
+                scope_inter, CHOOSERANGE(min(row(scope)), min(column(reference)), max(row(scope)), max(column(reference))),
+                LET(
+                    row_new,
+                    LET(x, row(scope_inter) * f(scope_inter), IFERROR(MIN(FILTER(x, x <> 0)), 1048577)),
+                    IF(
+                        row_new < MIN(ROW(reference)),
+                        CHANGEROW(reference, row_new),
+                        reference // when there is no other cells on the right, what to return??? return #CALC!???
+                    ))),
+            TRUE,
+            #VALUE!
+        )
+    )
+);
+
+A.EXTEND = LAMBDA(reference, [direction], [special_cell], [include_origin], [scope], 
+    LET(
+        OFFSETDIRECTION,
+        LAMBDA(reference, [direction],
+            IFS(
+                OR(ISOMITTED(direction), direction * 1 = 1), OFFSET(reference, 1, 0),
+                direction * 1 = 2, OFFSET(reference, 0, -1),
+                direction * 1 = 3, OFFSET(reference, 0, 1),
+                direction * 1 = 4, OFFSET(reference, -1, 0),
+                TRUE, #VALUE!
+            )
+        ),
+        IFS(
+            OR(ISOMITTED(include_origin), include_origin * 1 = 0),
+            OFFSETDIRECTION(reference, direction):A.JUMP(reference, direction, special_cell, scope), // exclude origin
+            include_origin * 1 = 1,
+            reference:A.JUMP(reference, direction, special_cell, scope), // include origin
+            TRUE,
+            #VALUE!
+        )
+    )
+);
+
+A.LOCATE.RANGEBYTEXT = LAMBDA(find_text, within_array, [locate_mode], [range_direction], [special_cell], [include_origin], [scope],
+    LET(
+        cell, A.LOCATE.CELLBYTEXT(find_text, within_array, locate_mode),
+        A.EXTEND(cell, range_direction, special_cell, include_origin, scope)
+    )
+);
