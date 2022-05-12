@@ -21,7 +21,7 @@ As manual operations in Excel exist everywhere, AutoXL is **cross-sectors**. It 
 - VBA developers
 - Developers in other programming languages and want to realize tasks in Excel
 
-# Demo
+## Demo
 
 A demo video is coming soon
 ## Installation
@@ -32,7 +32,7 @@ Besides using Microsoft's AFE, you could use [Formula Editor](https://www.10stud
 
 **Uninstallation:** To remove the library from your workbook, at the moment, you could go to "Name Manager" and manually delete all the functions starting with `A.` (make sure that you don't have other user-defined functions or ranged names starting with `A.`).
 
-# Documentation
+## Documentation
 
 The documentation on a website is coming soon. At the moment, you could refer to the comments in the file `AutoXL.txt` to see the list of the functions, their purpose, their argument, etc.
 
