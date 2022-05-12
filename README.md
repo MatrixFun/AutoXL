@@ -11,7 +11,7 @@ At the moment, AutoXL consists of 28 functions mainly in 3 categories:
 - Elementary functions for compound data types such as array and set. For instance,
     - `A.UNION.CELLS`, `A.INTERSECT.CELLS`, `A.SETDIFF.CELLS` for set
     - `A.EQ` for array
-- Extensions of built-in traditional lookup and reference functions. For instance,
+- Extensions of traditional built-in lookup and reference functions. For instance,
     - `A.XLOOKUP.ROWS` and `A.XLOOKUP.COLS` for built-in `XLOOKUP`
     - `A.XMATCH.ROWS` and `A.XMATCH.COLS` for built-in `XMATCH`
 
