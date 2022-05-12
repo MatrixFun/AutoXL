@@ -472,7 +472,7 @@ A.DUPLICATED.BYTIMES = LAMBDA(array, occurrence, [by_col],
         #VALUE!)))))
 );
 
-// values that occur a given number of times in an array are indicated as True in the resulting array.
+// values that occur a given number of times in an array are indicated as TRUE in the resulting array.
 // array: the input array
 //     if omitted: return #VALUE!
 // keep: 

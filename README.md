@@ -84,7 +84,7 @@ You could [open an issue](https://github.com/MatrixFun/AutoXL/issues) or write t
 - `A.SETDIFF.ROWS` (similarly for `A.SETDIFF.ROWS`): find the set difference of two arrays by rows; return an array of the unique rows in one array that are not in the other
 - `A.COUNTEQ.ROWS` (similarly for `A.COUNTEQ.COLS`): count the number of rows within an array that is equal to the given row
 - `A.DUPLICATED.BYTIMES`: values that occur a given number of times in an array are indicated as TRUE in the resulting array.
-- `A.DUPLICATED`: values that occur a given number of times in an array are indicated as True in the resulting array.
+- `A.DUPLICATED`: values that occur a given number of times in an array are indicated as TRUE in the resulting array.
 - `A.DUPLICATES.BYTIMES`: search duplicated values by occurrence times in an array and return the corresponding item from a second array
 - `A.DUPLICATES`: search duplicated values in an array and return the corresponding item from a second array
 - `A.LOCATE.CELLBYTEXT`: return a reference to the first cell within an array that contains a given text
