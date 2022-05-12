@@ -69,3 +69,25 @@ The AutoXL project welcomes your expertise and enthusiasm! Contributions include
 ## Contact
 
 You could [open an issue](https://github.com/MatrixFun/AutoXL/issues) or write to chengtie@gmail.com.
+
+## Full list of functions
+- `A.EQ`: return whether two values or arrays are equal
+- `A.XMATCH.ROWS` (similarly for `A.XMATCH.COLS`): search for a specified row in an array row by row, and then return the row's relative position
+- `A.XLOOKUP.ROWS` (similarly for `A.XLOOKUP.COLS`): search an array row by row for a match with a given row and return the corresponding item from a second array
+- `A.REDUCE.ROWS` (similarly for `A.REDUCE.COLS`): reduce an array to an accumulated value by applying a LAMBDA function to each row and returning the total value in the accumulator
+- `A.SCAN.ROWS` (similarly for `A.SCAN.COLS`): scan an array row by row by applying a function to each row, and return an array that has each intermediate value
+- `A.UNION.CELLS`: find the union of two arrays by cells; return an array of the unique cells that are in either of the two input arrays
+- `A.UNION.ROWS` (similarly for `A.UNION.COLS`): find the union of two arrays by rows; return an array of the unique rows that are in either of the two input arrays
+- `A.INTERSECT.CELLS`: find the intersection of two arrays by cells; return an array of the unique cells that are in both of the two input arrays
+- `A.INTERSECT.ROWS` (similarly for `A.INTERSECT.COLS`): find the intersection of two arrays by rows; return an array of the unique rows that are in both of the two input arrays
+- `A.SETDIFF.CELLS`: find the set difference of two arrays by cells; return an array of the unique cells in one array that are not in the other
+- `A.SETDIFF.ROWS` (similarly for `A.SETDIFF.ROWS`): find the set difference of two arrays by rows; return an array of the unique rows in one array that are not in the other
+- `A.COUNTEQ.ROWS` (similarly for `A.COUNTEQ.COLS`): count the number of rows within an array that is equal to the given row
+- `A.DUPLICATED.BYTIMES`: values that occur a given number of times in an array are indicated as TRUE in the resulting array.
+- `A.DUPLICATED`: values that occur a given number of times in an array are indicated as True in the resulting array.
+- `A.DUPLICATES.BYTIMES`: search duplicated values by occurrence times in an array and return the corresponding item from a second array
+- `A.DUPLICATES`: search duplicated values in an array and return the corresponding item from a second array
+- `A.LOCATE.CELLBYTEXT`: return a reference to the first cell within an array that contains a given text
+- `A.JUMP`: locate a range by jumping from an origin range in a direction within a scope range to special cells, and return a reference to that range
+- `A.EXTEND`: locate a range by an origin range and the direction to jump within a scope range, and return a reference to that range
+- `A.LOCATE.RANGEBYTEXT`: find the first cell within an array that contains a text, extend it in a direction within a scope range to obtain a range, and return a reference to that range
