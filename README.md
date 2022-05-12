@@ -54,7 +54,7 @@ The design and implementation of AutoXL has the following principles:
 - Make useful and friendly functions for concrete common tasks driven by Excel end-users
 - Make conventional and basic functions for fundamental and compound data types that Excel does not provide
 - Follow existing terminology, convention and style of Excel for naming functions and arguments, and default value of parameters, etc.
-- The implementation must be error-prone, robust, safe, easy-to-understand, and efficient.
+- The implementation must be error-prone, robust, safe, easy-to-understand, and efficient
 
 <!-- rely on derived names rather than optional arguments, because we aim to benefit end-users -->
 
