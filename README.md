@@ -4,14 +4,14 @@
 
 At the moment, AutoXL consists of
 - Useful, handy and powerful functions to automate manual tasks. For instance,
-    - `LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
-    - `DUPLICATES` to find duplicates in a range
+    - `A.LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`A.LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
+    - `A.DUPLICATES` to find duplicates in a range
 - Elementary functions for compound data types such as array and set. For instance,
-    - `UNION.CELLS`, `INTERSECT.CELLS`, `SETDIFF.CELLS` for set
-    - `EQ` for array
+    - `A.UNION.CELLS`, `A.INTERSECT.CELLS`, `A.SETDIFF.CELLS` for set
+    - `A.EQ` for array
 - Extensions of built-in traditional lookup and reference functions. For instance,
-    - `XLOOKUP.ROWS` and `XLOOKUP.COLS` for built-in `XLOOKUP`
-    - `XMATCH.ROWS` and `XMATCH.COLS` for built-in `XMATCH`
+    - `A.XLOOKUP.ROWS` and `A.XLOOKUP.COLS` for built-in `XLOOKUP`
+    - `A.XMATCH.ROWS` and `A.XMATCH.COLS` for built-in `XMATCH`
 
 ## Users
 
