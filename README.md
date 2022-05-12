@@ -2,7 +2,9 @@
 
 **AutoXL is a fundamental and powerful library of Excel functions written in Excel formula language.** It especially enables Excel users to automate tasks by functions and formulas which are usually undertaken manually (and repeatedly). It thus saves Excel users lots of time, and avoids tedious and error-prone manual operations.
 
-At the moment, AutoXL consists of
+## Functions
+
+At the moment, AutoXL consists of 28 functions mainly in 3 categories:
 - Useful, handy and powerful functions to automate manual tasks. For instance,
     - `A.LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`A.LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
     - `A.DUPLICATES` to find duplicates in a range
