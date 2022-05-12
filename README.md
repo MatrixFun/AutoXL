@@ -62,7 +62,7 @@ The design and implementation of AutoXL has the following principles:
 
 The AutoXL project welcomes your expertise and enthusiasm! Contributions include:
 
-- Tell us what manual operations you undertake frequently, what you want to achieve in Excel, functions you think good to have
+- Tell us what manual operations you undertake frequently, what you want to achieve in Excel, what functions you think good to have
 - Use and test the functions of AutoXL, and report bugs
 - Suggest better naming and code optimization
 - Propose to code new functions
