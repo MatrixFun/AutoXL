@@ -5,7 +5,7 @@
 ## Functions
 
 At the moment, AutoXL consists of 28 functions mainly in 3 categories:
-- Useful, handy and powerful functions to automate manual tasks. For instance,
+- Practical, useful, handy and powerful functions to automate manual tasks. For instance,
     - `A.LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`A.LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
     - `A.DUPLICATES` to find duplicates in a range
 - Elementary functions for compound data types such as array and set. For instance,
@@ -39,22 +39,22 @@ Besides using Microsoft's AFE, you could use [Formula Editor](https://www.10stud
 The documentation on a website is coming soon. At the moment, you could refer to the comments in the file `AutoXL.txt` to see the list of the functions, their purpose, their argument, etc.
 
 Additionally, here are related built-in functions of Excel:
-- traditional [lookup and reference functions](https://support.microsoft.com/en-us/office/lookup-and-reference-functions-reference-8aa21a3a-b56a-4055-8257-3ec89df2b23e)
+- Traditional [lookup and reference functions](https://support.microsoft.com/en-us/office/lookup-and-reference-functions-reference-8aa21a3a-b56a-4055-8257-3ec89df2b23e)
 - [LAMBDA function](https://techcommunity.microsoft.com/t5/excel-blog/announcing-lambda-turn-excel-formulas-into-custom-functions/ba-p/1925546)
 - [LAMBDA helper functions](https://techcommunity.microsoft.com/t5/excel-blog/announcing-lambda-helper-functions-lambdas-as-arguments-and-more/ba-p/2576648)
-- [new text and array functions](https://techcommunity.microsoft.com/t5/excel-blog/announcing-new-text-and-array-functions/ba-p/3186066])
+- [New text and array functions](https://techcommunity.microsoft.com/t5/excel-blog/announcing-new-text-and-array-functions/ba-p/3186066])
 
 
 ## License
 
 AutoXL is [MIT licensed](https://github.com/MatrixFun/AutoXL/blob/main/LICENSE).
-## Design principle
+## Design principles
 
 The design and implementation of AutoXL has the following principles:
-- Make useful and friendly functions for concrete common tasks driven by Excel end-users
+- Make practical, useful and friendly functions for concrete common tasks driven by Excel end-users
 - Make conventional and basic functions for fundamental and compound data types that Excel does not provide
 - Follow existing terminology, convention and style of Excel for naming functions and arguments, and default value of parameters, etc.
-- Error-prone, robust, safe, easy-to-understand, and efficient implementation
+- Robust, safe, easy-to-understand, and efficient implementation
 
 <!-- rely on derived names rather than optional arguments, because we aim to benefit end-users -->
 
@@ -64,7 +64,8 @@ The AutoXL project welcomes your expertise and enthusiasm! Contributions include
 
 - Tell us what manual operations you undertake frequently, what you want to achieve in Excel, what functions you think good to have
 - Use and test the functions of AutoXL, and report bugs
-- Suggest better naming and code optimization
+- Suggest better naming, documentation and code optimization
+- Propose to write documentation
 - Propose to code new functions
 ## Contact
 
