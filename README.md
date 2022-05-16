@@ -35,7 +35,7 @@ A youtube demo video is coming soon
 
 A GIF if coming soon
 
-**Get started quickly:** You could download this workbook (coming soon) where AutoXL has been already added; it contains also sample data and formulas; Formula Editor will be auto-opened.
+**Get started quickly:** You could download this workbook (coming soon) where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
 
 **Uninstallation:** To remove the library from your workbook, 
 - either you could go to "Name Manager" and manually delete all the functions starting with `A.` (make sure that you don't have other user-defined functions or ranged names starting with `A.`)
@@ -53,7 +53,7 @@ Additionally, here are related built-in functions of Excel:
 ## License
 
 AutoXL is [MIT licensed](https://github.com/MatrixFun/AutoXL/blob/main/LICENSE).
-## Principles
+## Design principles
 
 The design and implementation of AutoXL has the following principles:
 - Make practical, useful and friendly functions for concrete common tasks driven by Excel end-users
