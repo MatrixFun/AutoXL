@@ -100,5 +100,5 @@ You could [open an issue](https://github.com/MatrixFun/AutoXL/issues) or write t
 
 ## Other resources
 
-- Video course [Spreadsheet Language and Programming](https://chengtie.thinkific.com/courses/excel-programming-en) and [表格语言与编程](https://study.163.com/course/courseMain.htm?courseId=1211128814&share=2&shareId=480000002246464)
-- [www.10studio.tech](https://www.10studio.tech)
+- Video courses: [Spreadsheet Language and Programming](https://chengtie.thinkific.com/courses/excel-programming-en) and [表格语言与编程](https://study.163.com/course/courseMain.htm?courseId=1211128814&share=2&shareId=480000002246464)
+- Software: [www.10studio.tech](https://www.10studio.tech)
