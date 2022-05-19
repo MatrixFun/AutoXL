@@ -1,3 +1,6 @@
+// return the name and version of the library
+A.VERSION = LAMBDA("AutoXL 0.1.0");
+
 // return whether two values or arrays are equal
 // case-insensitive
 A.EQ = LAMBDA(value1, value2,
@@ -626,21 +629,23 @@ A.LOCATE.CELLBYTEXT = LAMBDA(find_text, within_array, [find_direction], [text_fu
 A.JUMP = LAMBDA(reference, [direction], [scope_range], [special_cell],
     LET(
         RANGE,
-        LAMBDA(row_min, col_min, row_max, col_max,
-            INDIRECT(ADDRESS(row_min, col_min)):INDIRECT(ADDRESS(row_max, col_max))),
+        LAMBDA(reference, row_min, col_min, row_max, col_max,
+            LET(
+                topleft, OFFSET(reference, -1 * MIN(ROW(reference)) + 1, -1 * MIN(COLUMN(reference)) + 1, 1, 1),
+                OFFSET(topleft, row_min - 1, col_min - 1, row_max - row_min + 1, col_max - col_min + 1))),
         CHANGEROW,
         LAMBDA(reference, row_new, 
-            RANGE(row_new, MIN(COLUMN(reference)), row_new, MAX(COLUMN(reference)))),
+            RANGE(reference, row_new, MIN(COLUMN(reference)), row_new, MAX(COLUMN(reference)))),
         CHANGECOL,
         LAMBDA(reference, col_new,
-            RANGE(MIN(ROW(reference)), col_new, MAX(ROW(reference)), col_new)),
+            RANGE(reference, MIN(ROW(reference)), col_new, MAX(ROW(reference)), col_new)),
         f,
         LAMBDA(scope, special_cell,
             IF(special_cell = 0, NOT(ISBLANK(scope)),
             IF(special_cell = 1, 1,
             #VALUE!))),
         direction, IF(ISOMITTED(direction), 0, direction * 1),
-        scope_range, IF(ISOMITTED(scope_range), RANGE(1, 1, 1048576, 16384), scope_range),
+        scope_range, IF(ISOMITTED(scope_range), RANGE(reference, 1, 1, 1048576, 16384), scope_range),
         special_cell, IF(ISOMITTED(special_cell), 0, special_cell * 1),
         IF(ISOMITTED(reference), #VALUE!,
         IF(AND(direction <> 0, direction <> 1, direction <> 2, direction <> 3), #VALUE!,
@@ -650,26 +655,26 @@ A.JUMP = LAMBDA(reference, [direction], [scope_range], [special_cell],
             #VALUE!,
         IF(direction = 0,
             LET(
-                scope_inter, RANGE(MAX(MIN(ROW(reference)), MIN(ROW(scope_range))), MIN(COLUMN(reference)), MAX(ROW(scope_range)), MAX(COLUMN(reference))),
+                scope_inter, RANGE(reference, MAX(MIN(ROW(reference)), MIN(ROW(scope_range))), MIN(COLUMN(reference)), MAX(ROW(scope_range)), MAX(COLUMN(reference))),
                 LET(
                     row_new, MAX(ROW(scope_inter) * f(scope_inter, special_cell)),
                     IF(row_new > MAX(ROW(reference)), CHANGEROW(reference, row_new), reference))),            
         IF(direction = 1,
             LET(
-                scope_inter, RANGE(MIN(ROW(reference)), MAX(MIN(COLUMN(reference)), MIN(COLUMN(scope_range))), MAX(ROW(reference)), MAX(COLUMNS(scope_range))),
+                scope_inter, RANGE(reference, MIN(ROW(reference)), MAX(MIN(COLUMN(reference)), MIN(COLUMN(scope_range))), MAX(ROW(reference)), MAX(COLUMNS(scope_range))),
                 LET(
                     col_new, MAX(COLUMN(scope_inter) * f(scope_inter, special_cell)),
                     IF(col_new > MAX(COLUMN(reference)), CHANGECOL(reference, col_new), reference))),
         IF(direction = 2,
             LET(
-                scope_inter, RANGE(MIN(ROW(scope_range)), MIN(COLUMN(reference)), MIN(MAX(ROW(reference)), MAX(ROW(scope_range))), MAX(COLUMN(reference))),
+                scope_inter, RANGE(reference, MIN(ROW(scope_range)), MIN(COLUMN(reference)), MIN(MAX(ROW(reference)), MAX(ROW(scope_range))), MAX(COLUMN(reference))),
                 LET(
                     row_new,
                     LET(x, ROW(scope_inter) * f(scope_inter, special_cell), IFERROR(MIN(FILTER(x, x <> 0)), 1048577)),
                     IF(row_new < MIN(ROW(reference)), CHANGEROW(reference, row_new), reference))),
         IF(direction = 3,
             LET(
-                scope_inter, RANGE(MIN(ROW(reference)), MIN(COLUMN(scope_range)), MAX(ROW(reference)), MIN(MAX(COLUMN(reference)), MAX(COLUMNS(scope_range)))),
+                scope_inter, RANGE(reference, MIN(ROW(reference)), MIN(COLUMN(scope_range)), MAX(ROW(reference)), MIN(MAX(COLUMN(reference)), MAX(COLUMNS(scope_range)))),
                 LET(
                     col_new,
                     LET(x, COLUMN(scope_inter) * f(scope_inter, special_cell), IFERROR(MIN(FILTER(x, x <> 0)), 16385)),
@@ -699,8 +704,10 @@ A.JUMP = LAMBDA(reference, [direction], [scope_range], [special_cell],
 A.EXTEND = LAMBDA(reference, [direction], [scope_range], [special_cell], [include_origin],
     LET(
         RANGE,
-        LAMBDA(row_min, col_min, row_max, col_max,
-            INDIRECT(ADDRESS(row_min, col_min)):INDIRECT(ADDRESS(row_max, col_max))),
+        LAMBDA(reference, row_min, col_min, row_max, col_max,
+            LET(
+                topleft, OFFSET(reference, -1 * MIN(ROW(reference)) + 1, -1 * MIN(COLUMN(reference)) + 1, 1, 1),
+                OFFSET(topleft, row_min - 1, col_min - 1, row_max - row_min + 1, col_max - col_min + 1))),
         calcerror, FILTER({1},FALSE),
         direction, IF(ISOMITTED(direction), 0, direction * 1),
         include_origin, IF(ISOMITTED(include_origin), 0, include_origin * 1),
@@ -712,10 +719,10 @@ A.EXTEND = LAMBDA(reference, [direction], [scope_range], [special_cell], [includ
             LET(
                 jump_to, A.JUMP(reference, direction, scope_range, special_cell),
                 IF(A.EQ(reference, jump_to), calcerror,
-                    IF(direction = 0, RANGE(MAX(ROW(reference)) + 1, MIN(COLUMN(jump_to)), MAX(ROW(jump_to)), MAX(COLUMN(jump_to))),
-                    IF(direction = 1, RANGE(MIN(ROW(jump_to)), MAX(COLUMN(reference)) + 1, MAX(ROW(jump_to)), MAX(COLUMN(jump_to))),
-                    IF(direction = 2, RANGE(MIN(ROW(jump_to)), MIN(COLUMN(jump_to)), MIN(ROW(reference)) - 1, MAX(COLUMN(jump_to))),
-                    IF(direction = 3, RANGE(MIN(ROW(jump_to)), MIN(COLUMN(jump_to)), MAX(ROW(jump_to)), MIN(COLUMN(reference)) - 1),
+                    IF(direction = 0, RANGE(reference, MAX(ROW(reference)) + 1, MIN(COLUMN(jump_to)), MAX(ROW(jump_to)), MAX(COLUMN(jump_to))),
+                    IF(direction = 1, RANGE(reference, MIN(ROW(jump_to)), MAX(COLUMN(reference)) + 1, MAX(ROW(jump_to)), MAX(COLUMN(jump_to))),
+                    IF(direction = 2, RANGE(reference, MIN(ROW(jump_to)), MIN(COLUMN(jump_to)), MIN(ROW(reference)) - 1, MAX(COLUMN(jump_to))),
+                    IF(direction = 3, RANGE(reference, MIN(ROW(jump_to)), MIN(COLUMN(jump_to)), MAX(ROW(jump_to)), MIN(COLUMN(reference)) - 1),
                     #VALUE!)))))),
         IF(include_origin = 1,
             reference:A.JUMP(reference, direction, scope_range, special_cell),
