@@ -43,13 +43,13 @@ A.XMATCH.ROWS = LAMBDA(lookup_row, lookup_array, [search_mode],
 );
 
 // search for a specified column in an array column by column, and then return the column's relative position
-// "lookup_col": the column to search for
+// lookup_col: the column to search for
 //     accept: a single value, a 1D array, a 2D array
 //     if omitted: return #VALUE!
-// "lookup_array": the array to search
+// lookup_array: the array to search
 //     accept: a single value, a 1D array, a 2D array
 //     if omitted: return #VALUE!
-// "search_mode": specify the search mode to use
+// search_mode: specify the search mode to use
 //     1 - Perform a search starting at the first item (default).
 //     -1 - Perform a reverse search starting at the last item.
 // remarks:
@@ -104,7 +104,7 @@ A.XLOOKUP.ROWS = LAMBDA(lookup_row, lookup_array, return_array, [if_not_found], 
             LET(
                 x,
                 A.XMATCH.ROWS(lookup_row, lookup_array, search_mode),
-                ByROW(
+                BYROW(
                     SEQUENCE(ROWS(lookup_row)),
                     LAMBDA(row, 
                         IF(ISERROR(CHOOSEROWS(x, row)), if_not_found, CHOOSEROWS(return_array, CHOOSEROWS(x, row))))))))
@@ -141,7 +141,7 @@ A.XLOOKUP.COLS = LAMBDA(lookup_col, lookup_array, return_array, [if_not_found], 
             LET(
                 x,
                 A.XMATCH.COLS(lookup_col, lookup_array, search_mode),
-                ByCOL(
+                BYCOL(
                     SEQUENCE(COLUMNS(lookup_col)),
                     LAMBDA(col, 
                         IF(ISERROR(CHOOSECOLS(x, col)), if_not_found, CHOOSECOLSS(return_array, CHOOSECOLS(x, col))))))))
