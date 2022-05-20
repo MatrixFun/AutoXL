@@ -4,7 +4,7 @@
 
 ## Function categories
 
-At the moment, AutoXL consists of 28 functions mainly in 3 categories:
+At the moment, AutoXL consists of 29 functions mainly in 3 categories:
 - Practical, useful, handy and powerful functions to automate manual tasks. For instance,
     - `A.LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`A.LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
     - `A.DUPLICATES` to find duplicates in a range
@@ -79,6 +79,7 @@ The AutoXL project welcomes your expertise and enthusiasm! Contributions include
 You could [open an issue](https://github.com/MatrixFun/AutoXL/issues) or write to chengtie@gmail.com.
 
 ## Full list of functions
+- `A.VERSION`: return the name and version of the library
 - `A.EQ`: return whether two values or arrays are equal
 - `A.XMATCH.ROWS` (similarly for `A.XMATCH.COLS`): search for a specified row in an array row by row, and then return the row's relative position
 - `A.XLOOKUP.ROWS` (similarly for `A.XLOOKUP.COLS`): search an array row by row for a match with a given row and return the corresponding item from a second array
