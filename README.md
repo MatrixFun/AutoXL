@@ -1,6 +1,6 @@
 # AutoXL
 
-**AutoXL is a fundamental and powerful library of Excel functions written in Excel formula language.** It especially enables Excel users to automate manual tasks, by extensions of lookup and references functions, and elementary functions for array and set, set, etc. It thus saves Excel users lots of time, and avoids tedious and error-prone manual operations.
+**AutoXL is a fundamental and powerful library of Excel functions written in Excel formula language.** It especially enables Excel users to automate manual tasks, by extensions of lookup and references functions, and elementary functions for array and set, etc. It thus saves Excel users lots of time, and avoids tedious and error-prone manual operations.
 
 ## Function categories
 
