@@ -25,7 +25,7 @@ As manual operations in Excel exist everywhere, AutoXL is **cross-sectors**. It 
 
 ## Demo
 
-A youtube demo video is coming soon
+A YouTube demo video is coming soon.
 
 ## Installation
 
@@ -33,7 +33,7 @@ A youtube demo video is coming soon
 
 **Installation:** Besides using Microsoft's AFE, you could use [Formula Editor](https://www.10studio.tech/docs/formulaEditor) to add the AutoXL library to your workbook, which will provide a version control. The latest stable versions of AutoXL will always be available in Formula Editor.
 
-A GIF if coming soon
+A GIF is coming soon.
 
 **Get started quickly:** You could download the workbook `AutoXL-Demo.xlsx` where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
 
