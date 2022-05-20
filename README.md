@@ -35,7 +35,7 @@ A youtube demo video is coming soon
 
 A GIF if coming soon
 
-**Get started quickly:** You could download this workbook (coming soon) where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
+**Get started quickly:** You could download the workbook `AutoXL-Demo.xlsx` where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
 
 **Uninstallation:** To remove the library from your workbook, 
 - either you could go to "Name Manager" and manually delete all the functions starting with `A.` (make sure that you don't have other user-defined functions or ranged names starting with `A.`)
