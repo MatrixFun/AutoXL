@@ -105,3 +105,4 @@ You could [open an issue](https://github.com/MatrixFun/AutoXL/issues) or write t
 
 - Video courses: [Spreadsheet Language and Programming](https://chengtie.thinkific.com/courses/excel-programming-en) and [表格语言与编程](https://study.163.com/course/courseMain.htm?courseId=1211128814&share=2&shareId=480000002246464)
 - Software for spreadsheets: [www.10studio.tech](https://www.10studio.tech)
+- Social media: [YouTube](https://www.youtube.com/watch?v=Jr1x1EnP1qA&list=PLOeixAylgNENCnQr9pUWjyAVFzJGbiOSX), [LinkedIn](https://www.linkedin.com/in/chengtie/)
