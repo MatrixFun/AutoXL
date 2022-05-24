@@ -8,12 +8,12 @@ At the moment, AutoXL consists of 29 functions mainly in 3 categories:
 - Practical, useful, handy and powerful functions to automate manual tasks. For instance,
     - `A.LOCATE.CELLBYTEXT` to find a cell in a range that contains a given text.`A.LOCATE.RANGEBYTEXT` to find a header in a range that contains a given text and to return the data below the header
     - `A.DUPLICATES` to find duplicates in a range
+- Extensions of traditional built-in "lookup and reference" functions, to make them address all real-world use cases. For instance,
+    - `A.XLOOKUP.ROWS` and `A.XLOOKUP.COLS` for built-in `XLOOKUP`
+    - `A.XMATCH.ROWS` and `A.XMATCH.COLS` for built-in `XMATCH`
 - Elementary functions for compound data types such as array and set. For instance,
     - `A.UNION.CELLS`, `A.INTERSECT.CELLS`, `A.SETDIFF.CELLS` for set
     - `A.EQ` for array
-- Extensions of traditional built-in "lookup and reference" functions. For instance,
-    - `A.XLOOKUP.ROWS` and `A.XLOOKUP.COLS` for built-in `XLOOKUP`
-    - `A.XMATCH.ROWS` and `A.XMATCH.COLS` for built-in `XMATCH`
 
 ## Users
 
@@ -29,7 +29,7 @@ A YouTube demo video is coming soon.
 
 ## Installation
 
-**Excel version requirement:** Many functions of AutoXL are written with newly-introduced built-in functions of Excel, which require Microsoft 365 and probably don't exist in non-subscription Office 2019 or later. Therefore, AutoXL has the same requirement.
+**Excel version requirement:** Many functions of AutoXL are written with newly-introduced built-in functions of Excel, which require Microsoft 365 and probably don't exist in non-subscription Office 2019 or later. Therefore, AutoXL has the same requirement. You could simply type `=VSTACK` in a cell, if its intellisense shows up, that means your Excel meets the requirement.
 
 <!-- If you don't have the good version of Excel on your machine, you could always use [Excel Online](https://www.office.com/launch/excel?ui=en-US&rs=GB&auth=1) which has new functions and is free. -->
 
