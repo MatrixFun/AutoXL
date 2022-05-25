@@ -44,7 +44,7 @@ A YouTube demo video is coming soon.
 - or under Formula Editor, you could go to "Libraries => AutoXL => Remove"; it will only remove AutoXL's functions.
 ## Documentation
 
-The documentation on a website is coming soon. At the moment, you could refer to the comments in the file `AutoXL.txt` to see the list of the functions, their purpose, their argument, etc.
+The documentation on a website is coming soon. At the moment, you could refer to the comments in the file `AutoXL.txt` to see the list of the functions, their purpose, their arguments, etc.
 
 Additionally, here are related built-in functions of Excel:
 - Traditional [lookup and reference functions](https://support.microsoft.com/en-us/office/lookup-and-reference-functions-reference-8aa21a3a-b56a-4055-8257-3ec89df2b23e)
