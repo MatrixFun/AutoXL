@@ -25,7 +25,7 @@ As manual operations in Excel exist everywhere, AutoXL is **cross-sectors**. It 
 
 ## Demo
 
-A YouTube demo video is coming soon.
+[![Demo Video](https://i.ibb.co/jyL1ctb/Screenshot-2022-05-28-at-17-04-04.png)](https://www.youtube.com/watch?v=WtBtnwtyBM4)
 
 ## Installation
 
