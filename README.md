@@ -33,7 +33,7 @@ As manual operations in Excel exist everywhere, AutoXL is **cross-sectors**. It 
 
 <!-- If you don't have the good version of Excel on your machine, you could always use [Excel Online](https://www.office.com/launch/excel?ui=en-US&rs=GB&auth=1) which has new functions and is free. -->
 
-**Get started quickly:** You could download the workbook `AutoXL-Demo.xlsx` where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
+**Get started quickly:** You could download the workbook `Demo/AutoXL-Demo.xlsx` where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
 
 **Installation:** Besides using Microsoft's AFE, you could use [Formula Editor](https://www.10studio.tech/docs/formulaEditor) to add the AutoXL library to your workbook, which will provide a version control. The latest stable versions of AutoXL will always be available in Formula Editor.
 
