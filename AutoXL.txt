@@ -33,13 +33,15 @@ A.XMATCH.ROWS = LAMBDA(lookup_row, lookup_array, [search_mode],
                 ISOMITTED(lookup_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
+            IF(AND(COLUMNS(lookup_row) = 1, COLUMNS(lookup_array) = 1),
+            XMATCH(lookup_row, lookup_array, 0, search_mode),
             LET(
                 XMATCH_ROW,
                 LAMBDA(lookup_1_row, lookup_array, [search_mode],
                     XMATCH(TRUE, BYROW(lookup_array, LAMBDA(row, A.EQ(row, lookup_1_row))), 0, search_mode)),
                 BYROW(
                     lookup_row, 
-                    LAMBDA(row, XMATCH_ROW(row, lookup_array, search_mode))))))
+                    LAMBDA(row, XMATCH_ROW(row, lookup_array, search_mode)))))))
 );
 
 // search for a specified column in an array column by column, and then return the column's relative position
@@ -64,13 +66,15 @@ A.XMATCH.COLS = LAMBDA(lookup_col, lookup_array, [search_mode],
                 ISOMITTED(lookup_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
+            IF(AND(ROWS(lookup_row) = 1, ROWS(lookup_array) = 1),
+            XMATCH(lookup_col, lookup_array, 0, search_mode),
             LET(
                 XMATCH_COL,
                 LAMBDA(lookup_1_col, lookup_array, [search_mode],
                     XMATCH(TRUE, BYCOL(lookup_array, LAMBDA(col, A.EQ(col, lookup_1_col))), 0, search_mode)),
                 BYCOL(
                     lookup_col, 
-                    LAMBDA(col, XMATCH_COL(col, lookup_array, search_mode))))))
+                    LAMBDA(col, XMATCH_COL(col, lookup_array, search_mode)))))))
 );
 
 // search an array row by row for a match with a given row and return the corresponding item from a second array
@@ -101,13 +105,15 @@ A.XLOOKUP.ROWS = LAMBDA(lookup_row, lookup_array, return_array, [if_not_found], 
                 ISOMITTED(return_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
+            IF(AND(COLUMNS(lookup_row) = 1, COLUMNS(lookup_array) = 1),
+            XLOOKUP(lookup_row, lookup_array, return_array, if_not_found, 0, search_mode),
             LET(
                 x,
                 A.XMATCH.ROWS(lookup_row, lookup_array, search_mode),
                 BYROW(
                     SEQUENCE(ROWS(lookup_row)),
                     LAMBDA(row, 
-                        IF(ISERROR(CHOOSEROWS(x, row)), if_not_found, CHOOSEROWS(return_array, CHOOSEROWS(x, row))))))))
+                        IF(ISERROR(CHOOSEROWS(x, row)), if_not_found, CHOOSEROWS(return_array, CHOOSEROWS(x, row)))))))))
 );
 
 // search an array column by column for a match with a given column and return the corresponding item from a second array
@@ -138,13 +144,15 @@ A.XLOOKUP.COLS = LAMBDA(lookup_col, lookup_array, return_array, [if_not_found], 
                 ISOMITTED(return_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
+            IF(AND(ROWS(lookup_row) = 1, ROWS(lookup_array) = 1),
+            XLOOKUP(lookup_col, lookup_array, return_array, if_not_found, 0, search_mode),
             LET(
                 x,
                 A.XMATCH.COLS(lookup_col, lookup_array, search_mode),
                 BYCOL(
                     SEQUENCE(COLUMNS(lookup_col)),
                     LAMBDA(col, 
-                        IF(ISERROR(CHOOSECOLS(x, col)), if_not_found, CHOOSECOLSS(return_array, CHOOSECOLS(x, col))))))))
+                        IF(ISERROR(CHOOSECOLS(x, col)), if_not_found, CHOOSECOLSS(return_array, CHOOSECOLS(x, col)))))))))
 );
 
 // reduce an array to an accumulated value by applying a LAMBDA function to each row and returning the total value in the accumulator
@@ -427,12 +435,14 @@ A.COUNTEQ.ROWS = LAMBDA(array, criteria_row,
     IF(
         OR(ISOMITTED(array), ISOMITTED(criteria_row)),
         #VALUE!,
+        IF(AND(COLUMNS(array) = 1, COLUMNS(criteria_row) = 1),
+        COUNTIF(array, criteria_row),
         BYROW(
             criteria_row,
             LAMBDA(
                 row,
                 A.REDUCE.ROWS(0, array, LAMBDA(acc, row_bis,
-                    IF(A.EQ(row_bis, row), acc + 1, acc))))))
+                    IF(A.EQ(row_bis, row), acc + 1, acc)))))))
 );
 
 // count the number of columns within an array that is equal to the given column
@@ -449,12 +459,14 @@ A.COUNTEQ.COLS = LAMBDA(array, criteria_col,
     IF(
         OR(ISOMITTED(array), ISOMITTED(criteria_col)),
         #VALUE!,
+        IF(AND(ROWS(array) = 1, ROWS(criteria_col) = 1),
+        COUNTIF(array, criteria_col),
         BYCOL(
             criteria_col,
             LAMBDA(
                 col,
                 A.REDUCE.COLS(0, array, LAMBDA(acc, col_bis,
-                    IF(A.EQ(col_bis, col), acc + 1, acc))))))
+                    IF(A.EQ(col_bis, col), acc + 1, acc)))))))
 );
 
 // values that occur a given number of times in an array are indicated as TRUE in the resulting array.
