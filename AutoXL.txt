@@ -1,5 +1,5 @@
 // return the name and version of the library
-A.VERSION = LAMBDA("AutoXL 0.1.0");
+A.VERSION = LAMBDA("AutoXL 0.1.1");
 
 // return whether two values or arrays are equal
 // case-insensitive
@@ -152,7 +152,7 @@ A.XLOOKUP.COLS = LAMBDA(lookup_col, lookup_array, return_array, [if_not_found], 
                 BYCOL(
                     SEQUENCE(COLUMNS(lookup_col)),
                     LAMBDA(col, 
-                        IF(ISERROR(CHOOSECOLS(x, col)), if_not_found, CHOOSECOLSS(return_array, CHOOSECOLS(x, col)))))))))
+                        IF(ISERROR(CHOOSECOLS(x, col)), if_not_found, CHOOSECOLS(return_array, CHOOSECOLS(x, col)))))))))
 );
 
 // reduce an array to an accumulated value by applying a LAMBDA function to each row and returning the total value in the accumulator
