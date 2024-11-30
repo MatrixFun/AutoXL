@@ -1,5 +1,5 @@
 // return the name and version of the library
-A.VERSION = LAMBDA("AutoXL 0.1.1");
+A.VERSION = LAMBDA("AutoXL 0.1.2");
 
 // return whether two values or arrays are equal
 // case-insensitive
@@ -66,7 +66,7 @@ A.XMATCH.COLS = LAMBDA(lookup_col, lookup_array, [search_mode],
                 ISOMITTED(lookup_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
-            IF(AND(ROWS(lookup_row) = 1, ROWS(lookup_array) = 1),
+            IF(AND(ROWS(lookup_col) = 1, ROWS(lookup_array) = 1),
             XMATCH(lookup_col, lookup_array, 0, search_mode),
             LET(
                 XMATCH_COL,
@@ -144,7 +144,7 @@ A.XLOOKUP.COLS = LAMBDA(lookup_col, lookup_array, return_array, [if_not_found], 
                 ISOMITTED(return_array),
                 AND(search_mode <> 1, search_mode <> -1)),
             #VALUE!,
-            IF(AND(ROWS(lookup_row) = 1, ROWS(lookup_array) = 1),
+            IF(AND(ROWS(lookup_col) = 1, ROWS(lookup_array) = 1),
             XLOOKUP(lookup_col, lookup_array, return_array, if_not_found, 0, search_mode),
             LET(
                 x,
